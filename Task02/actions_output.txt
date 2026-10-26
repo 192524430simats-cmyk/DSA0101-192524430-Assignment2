@@ -1,0 +1,20 @@
+GitHub Actions run: 40335668704
+Compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Command: g++ -std=c++17 -Wall -Wextra -pedantic Task02/marks_register.cpp -o /tmp/q2
+Command: /tmp/q2
+
+highest before: 91
+array after reference moderation: 78 93 84 91 88
+index alternative points to: 93
+pointer alternative points to: 93
+copy remains independent: 93
+
+Warning demonstration command:
+g++ -std=c++17 -Wall -Wextra -Wreturn-local-addr -c Task02/dangling_reference_warning.cpp -o /tmp/q2_warning.o
+
+Observed diagnostic:
+Task02/dangling_reference_warning.cpp:6:12: warning: reference to local variable ‘local’ returned [-Wreturn-local-addr]
+    6 |     return local;
+      |            ^~~~~
+Task02/dangling_reference_warning.cpp:5:9: note: declared here
+    5 |     int local = 42;
