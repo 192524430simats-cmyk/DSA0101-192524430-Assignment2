@@ -1,0 +1,11 @@
+GitHub Actions run: 40336138680
+Runner: GitHub-hosted Ubuntu 24.04; g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Command: g++ -std=c++17 -Wall -Wextra -pedantic -O2 Task07/history_redesign_benchmark.cpp -o /tmp/q7
+Command: /tmp/q7
+
+operations_per_run=50000 repeats=5
+capacity=10 shift_median_ms=0.363243 ring_median_ms=0.169579 same_contents=true checksum=4199165
+capacity=50 shift_median_ms=0.673677 ring_median_ms=0.169579 same_contents=true checksum=24061370
+capacity=100 shift_median_ms=0.857424 ring_median_ms=0.169559 same_contents=true checksum=48286580
+capacity=500 shift_median_ms=3.36483 ring_median_ms=0.169579 same_contents=true checksum=249986506
+capacity=1000 shift_median_ms=6.37392 ring_median_ms=0.169989 same_contents=true checksum=500356964
