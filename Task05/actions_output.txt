@@ -1,0 +1,14 @@
+GitHub Actions run: 40335668704
+Compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Command: g++ -std=c++17 -Wall -Wextra -pedantic Task05/static_members.cpp -o /tmp/q5
+Command: /tmp/q5
+
+Token prediction program: 101 103 104 4
+Asha: Seat 1
+Bala: Seat 2
+Chitra: Seat 3
+Dev: Waiting
+Issued: 3
+Function ticket 1: Waiting
+Function ticket 2: Waiting
+Issued after function calls: 3
