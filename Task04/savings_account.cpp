@@ -1,6 +1,7 @@
-// Q4 design: a private circular array stores the latest ten transactions.
-// Prediction: after 11 accepted operations, the statement contains the withdrawal
-// and deposits 10 through 90; the rejected withdrawal does not enter the history.
+// Q4 baseline design: a private fixed array stores the latest ten transactions.
+// When full, entries shift left before the new entry is appended (O(k) moves).
+// Prediction: after 11 accepted operations, the mini-statement contains the
+// withdrawal and deposits 10 through 90; a rejected withdrawal is not recorded.
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -18,16 +19,17 @@ class SavingsAccount
     double balance_;
     Transaction transactions_[10]{};
     int count_ = 0;
-    int oldest_ = 0;
 
     void record(const std::string& type, double amount)
     {
-        const int slot = (oldest_ + count_) % 10;
-        transactions_[slot] = Transaction{type, amount, balance_};
         if (count_ < 10)
-            ++count_;
+            transactions_[count_++] = Transaction{type, amount, balance_};
         else
-            oldest_ = (oldest_ + 1) % 10;
+        {
+            for (int i = 1; i < 10; ++i)
+                transactions_[i - 1] = transactions_[i];
+            transactions_[9] = Transaction{type, amount, balance_};
+        }
     }
 
 public:
@@ -63,7 +65,7 @@ void SavingsAccount::miniStatement() const
               << std::fixed << std::setprecision(2) << balance_ << '\n';
     for (int i = 0; i < count_; ++i)
     {
-        const Transaction& t = transactions_[(oldest_ + i) % 10];
+        const Transaction& t = transactions_[i];
         std::cout << t.type << " amount=$" << t.amount
                   << " balance-after=$" << t.balanceAfter << '\n';
     }
