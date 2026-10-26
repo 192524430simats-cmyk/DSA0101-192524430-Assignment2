@@ -1,0 +1,11 @@
+GitHub Actions run: 40335668704
+Compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Command: g++ -std=c++17 -Wall -Wextra -pedantic Task03/courier.cpp -o /tmp/q3
+Command: /tmp/q3
+
+charge(2): selected overload: int grams; charge = $0.10
+charge(2.0): selected overload: double kilograms; charge = $100.00
+charge(2.0f): selected overload: double kilograms; charge = $100.00
+charge(250): selected overload: int grams; charge = $12.50
+charge(1250, true): selected overload: int grams; charge = $82.50
+charge(Parcel{1.5, true, false}): selected overload: Parcel; charge = $95.00
