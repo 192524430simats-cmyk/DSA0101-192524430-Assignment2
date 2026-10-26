@@ -1,7 +1,8 @@
 // Q6 correctness cases are reasoned before execution:
 // 09:45 to 13:10 is 205 minutes; 13:10 is not earlier than 09:45.
 // Equal times differ by zero and neither is earlier. 11:50 precedes 12:10 by 20 min.
-// The benchmark compares an inline function and an out-of-line noinline function.
+// The benchmark compares an inline function and an out-of-line noinline function
+// on identical deterministic inputs at both optimization levels.
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -62,8 +63,7 @@ int main()
     constexpr int CALLS = 10000000;
     constexpr int REPEATS = 5;
     std::array<int, DATA_SIZE> left{}, right{};
-    unsigned int state = static_cast<unsigned int>(
-        std::chrono::steady_clock::now().time_since_epoch().count());
+    unsigned int state = 0xC0FFEEu;
     for (std::size_t i = 0; i < DATA_SIZE; ++i)
     {
         state = state * 1664525u + 1013904223u;
