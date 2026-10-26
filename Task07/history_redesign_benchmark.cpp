@@ -1,6 +1,8 @@
 // Q7 prediction before execution: both implementations keep identical data,
 // while circular insertion time should grow less as capacity grows. Shifting is
-// O(k) once full; ring insertion is O(1). Results are measured by the workflow.
+// O(k) once full; ring insertion is O(1). The workflow reports medians of 5 runs.
+#include <algorithm>
+#include <array>
 #include <chrono>
 #include <cstddef>
 #include <iostream>
@@ -91,22 +93,31 @@ bool sameContents(const ShiftHistory& shifted, const RingHistory& ring)
 int main()
 {
     constexpr std::size_t OPERATIONS = 50000;
+    constexpr std::size_t REPEATS = 5;
     const std::size_t capacities[] = {10, 50, 100, 500, 1000};
-    std::cout << "operations=" << OPERATIONS << '\n';
+    std::cout << "operations_per_run=" << OPERATIONS
+              << " repeats=" << REPEATS << '\n';
     for (std::size_t capacity : capacities)
     {
         ShiftHistory shifted(capacity);
         RingHistory ring(capacity);
-        const double shiftedMs = run(shifted, OPERATIONS);
-        const double ringMs = run(ring, OPERATIONS);
+        std::array<double, REPEATS> shiftMs{}, ringMs{};
+        for (std::size_t repeat = 0; repeat < REPEATS; ++repeat)
+        {
+            shiftMs[repeat] = run(shifted, OPERATIONS);
+            ringMs[repeat] = run(ring, OPERATIONS);
+        }
+        std::sort(shiftMs.begin(), shiftMs.end());
+        std::sort(ringMs.begin(), ringMs.end());
+
         const bool equal = sameContents(shifted, ring);
         unsigned long long checksum = 0;
         for (std::size_t i = 0; i < ring.size(); ++i)
             checksum += ring.at(i);
 
         std::cout << "capacity=" << capacity
-                  << " shift_ms=" << shiftedMs
-                  << " ring_ms=" << ringMs
+                  << " shift_median_ms=" << shiftMs[REPEATS / 2]
+                  << " ring_median_ms=" << ringMs[REPEATS / 2]
                   << " same_contents=" << std::boolalpha << equal
                   << " checksum=" << checksum << '\n';
     }
