@@ -1,0 +1,12 @@
+GitHub Actions run: 40335668704
+Compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Command: g++ -std=c++17 -Wall -Wextra -pedantic Task01/value_reference_pointer.cpp -o /tmp/q1
+Command: /tmp/q1
+
+1 12 13
+1 100
+16 13 6 
+after call by value    : 45000
+after call by reference: 40500
+after call by pointer  : 40500
+after 10%, 15%, 25% in sequence: 25819
