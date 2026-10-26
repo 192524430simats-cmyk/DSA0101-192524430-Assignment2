@@ -1,0 +1,17 @@
+GitHub Actions run: 40335668704
+Compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Command: g++ -std=c++17 -Wall -Wextra -pedantic Task04/savings_account.cpp -o /tmp/q4
+Command: /tmp/q4
+
+insufficient withdrawal rejected: true
+Account 2024001 balance=$1300.00
+withdrawal amount=$-150.00 balance-after=$850.00
+deposit amount=$10.00 balance-after=$860.00
+deposit amount=$20.00 balance-after=$880.00
+deposit amount=$30.00 balance-after=$910.00
+deposit amount=$40.00 balance-after=$950.00
+deposit amount=$50.00 balance-after=$1000.00
+deposit amount=$60.00 balance-after=$1060.00
+deposit amount=$70.00 balance-after=$1130.00
+deposit amount=$80.00 balance-after=$1210.00
+deposit amount=$90.00 balance-after=$1300.00
