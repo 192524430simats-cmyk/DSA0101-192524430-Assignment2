@@ -1,0 +1,80 @@
+name: Build and run assignment programs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  compile-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Build, execute, and save console evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p run-evidence
+
+          {
+            echo '$ g++ --version'
+            g++ --version
+            echo
+            echo '$ g++ -std=c++17 -Wall -Wextra -pedantic Task01/value_reference_pointer.cpp -o /tmp/q1'
+            g++ -std=c++17 -Wall -Wextra -pedantic Task01/value_reference_pointer.cpp -o /tmp/q1
+            echo '$ /tmp/q1'
+            /tmp/q1
+          } 2>&1 | tee run-evidence/Q1.txt
+
+          {
+            echo '$ g++ -std=c++17 -Wall -Wextra -pedantic Task02/marks_register.cpp -o /tmp/q2'
+            g++ -std=c++17 -Wall -Wextra -pedantic Task02/marks_register.cpp -o /tmp/q2
+            echo '$ /tmp/q2'
+            /tmp/q2
+            echo
+            echo '$ g++ -std=c++17 -Wall -Wextra -Wreturn-local-addr -c Task02/dangling_reference_warning.cpp -o /tmp/q2_warning.o'
+            g++ -std=c++17 -Wall -Wextra -Wreturn-local-addr -c Task02/dangling_reference_warning.cpp -o /tmp/q2_warning.o
+          } 2>&1 | tee run-evidence/Q2.txt
+
+          {
+            echo '$ g++ -std=c++17 -Wall -Wextra -pedantic Task03/courier.cpp -o /tmp/q3'
+            g++ -std=c++17 -Wall -Wextra -pedantic Task03/courier.cpp -o /tmp/q3
+            echo '$ /tmp/q3'
+            /tmp/q3
+          } 2>&1 | tee run-evidence/Q3.txt
+
+          {
+            echo '$ g++ -std=c++17 -Wall -Wextra -pedantic Task04/savings_account.cpp -o /tmp/q4'
+            g++ -std=c++17 -Wall -Wextra -pedantic Task04/savings_account.cpp -o /tmp/q4
+            echo '$ /tmp/q4'
+            /tmp/q4
+          } 2>&1 | tee run-evidence/Q4.txt
+
+          {
+            echo '$ g++ -std=c++17 -Wall -Wextra -pedantic Task05/static_members.cpp -o /tmp/q5'
+            g++ -std=c++17 -Wall -Wextra -pedantic Task05/static_members.cpp -o /tmp/q5
+            echo '$ /tmp/q5'
+            /tmp/q5
+          } 2>&1 | tee run-evidence/Q5.txt
+
+          for optimization in O0 O2; do
+            {
+              echo "$ g++ -std=c++17 -Wall -Wextra -pedantic -${optimization} Task06/time_friend_inline.cpp -o /tmp/q6_${optimization}"
+              g++ -std=c++17 -Wall -Wextra -pedantic -${optimization} Task06/time_friend_inline.cpp -o /tmp/q6_${optimization}
+              echo "$ /tmp/q6_${optimization}"
+              /tmp/q6_${optimization}
+            } 2>&1 | tee run-evidence/Q6_${optimization}.txt
+          done
+
+          {
+            echo '$ g++ -std=c++17 -Wall -Wextra -pedantic -O2 Task07/history_redesign_benchmark.cpp -o /tmp/q7'
+            g++ -std=c++17 -Wall -Wextra -pedantic -O2 Task07/history_redesign_benchmark.cpp -o /tmp/q7
+            echo '$ /tmp/q7'
+            /tmp/q7
+          } 2>&1 | tee run-evidence/Q7.txt
+      - name: Upload run transcripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: assignment-run-evidence
+          path: run-evidence/
